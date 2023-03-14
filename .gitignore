@@ -1,5 +1,6 @@
 sshkey
 sshkey.pub
+
 # Local .terraform directories
 # **/.terraform/*
 .terraform/

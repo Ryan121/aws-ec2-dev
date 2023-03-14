@@ -1,6 +1,9 @@
 resource "aws_instance" "ec2-dev" {
+  # Creates four identical aws ec2 instances
+  count = 4
+
   ami = "ami-0574da719dca65348"
-  instance_type = "t2.micro"
+  instance_type = "t2.nano"
   subnet_id = aws_subnet.public-subnet.id
   associate_public_ip_address = true
   key_name = aws_key_pair.production.key_name
@@ -39,8 +42,10 @@ resource "aws_instance" "ec2-dev" {
   #   volume_size = 50
   #   volume_type = "gp2"
   # }
+
+  # Name ="SERVER01"
   tags = {
-    Name ="SERVER01"
+    Name = "my-machine-${count.index}"
     Environment = "DEV"
     OS = "UBUNTU"
     Managed = "IAC"
