@@ -1,0 +1,46 @@
+# Create root AWS creds file for cli and packer comms
+
+mkdir ~/.aws
+chmod 700 ~/.aws
+
+sudo vi ~/.aws/credentials
+[default]
+aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+sudo vi ~/.aws/config
+[default]
+region=us-east-1
+output=json
+
+# List ssh keys
+ls -l .ssh
+
+# Generate ssh key
+ssh-keygen -t ed25519 -C "ryan-default-key"  =  Very secure key, more so than the default (also shorter than default) with a comment
+
+# Example of copying ssh key to virtual machine - If an existing ssh key exists with password protection
+ssh-copy-id -i ~/.ssh/id_ed25519.pub 54.172.245.229
+
+ansible all -m ping
+
+# If no password protection exists then copy it manually
+touch ansible.pub
+sudo vim ansible.pub
+cat ansible.pub >> ~/.ssh/authorized_keys
+
+# Display remote server side authorized ssh keys
+cat .ssh/authorized_keys
+
+eval $(ssh-agent)
+ps aux | grep {pid id}
+ssh-add = Add a key to the local env so you dont have to type a password in everytime
+
+OR us an alias (which is like creating your own linux command)
+ssha='eval $(ssh-agent) && ssh-add'
+nano .bashrc = Add the ssha command to save the alias definition indefinitely
+
+# When copying private key file make sure file is readable/writable only by you:
+chmod 600 ~/.ssh/id_rsa
+
+sudo ls -l /etc/sudoers.d
